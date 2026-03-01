@@ -17,6 +17,7 @@ export async function PUT(
       url: body.url,
       icon: body.icon,
       color: body.color,
+      ...(body.hidden !== undefined && { hidden: body.hidden }),
     })
     .where(eq(services.id, parseInt(id)))
     .returning()

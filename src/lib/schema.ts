@@ -13,6 +13,7 @@ export const services = sqliteTable("services", {
   icon: text("icon").notNull().default("Globe"),
   color: text("color").notNull().default("#3b82f6"),
   sortOrder: integer("sort_order").notNull().default(0),
+  hidden: integer("hidden").notNull().default(0),
   createdAt: text("created_at")
     .notNull()
     .$defaultFn(() => new Date().toISOString()),

@@ -1,7 +1,7 @@
 "use client";
 
 import { getLucideIcon, getFaviconUrl } from "@/lib/icons";
-import { Globe, Pencil, Trash2, GripVertical } from "lucide-react";
+import { Globe, Pencil, Trash2, GripVertical, Eye, EyeOff } from "lucide-react";
 import type { Service } from "@/types/service";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
@@ -11,6 +11,7 @@ type Props = {
   editMode: boolean;
   onEdit: (service: Service) => void;
   onDelete: (service: Service) => void;
+  onToggleHide: (service: Service) => void;
 };
 
 function ServiceIcon({
@@ -47,7 +48,7 @@ function ServiceIcon({
   return <Globe size={40} style={{ color }} />;
 }
 
-export function ServiceCard({ service, editMode, onEdit, onDelete }: Props) {
+export function ServiceCard({ service, editMode, onEdit, onDelete, onToggleHide }: Props) {
   const {
     attributes,
     listeners,
@@ -60,7 +61,7 @@ export function ServiceCard({ service, editMode, onEdit, onDelete }: Props) {
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
-    opacity: isDragging ? 0.4 : 1,
+    opacity: isDragging ? 0.4 : (service.hidden && editMode ? 0.4 : 1),
     zIndex: isDragging ? 10 : undefined,
   };
 
@@ -94,7 +95,7 @@ export function ServiceCard({ service, editMode, onEdit, onDelete }: Props) {
             <GripVertical size={14} />
           </div>
 
-          {/* Edit / Delete */}
+          {/* Edit / Hide / Delete */}
           <div className="absolute top-2 right-2 flex gap-1">
             <button
               onClick={(e) => {
@@ -105,6 +106,17 @@ export function ServiceCard({ service, editMode, onEdit, onDelete }: Props) {
               className="p-1.5 rounded-lg bg-gray-800/90 text-gray-400 hover:text-white hover:bg-gray-700 transition-colors"
             >
               <Pencil size={14} />
+            </button>
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                onToggleHide(service);
+              }}
+              title={service.hidden ? "Einblenden" : "Ausblenden"}
+              className="p-1.5 rounded-lg bg-gray-800/90 text-gray-400 hover:text-white hover:bg-gray-700 transition-colors"
+            >
+              {service.hidden ? <EyeOff size={14} /> : <Eye size={14} />}
             </button>
             <button
               onClick={(e) => {

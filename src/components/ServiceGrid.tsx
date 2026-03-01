@@ -106,6 +106,25 @@ export function ServiceGrid({ initialServices, initialBg, initialBgOpacity }: Pr
     setSettingsOpen(false);
   };
 
+  const handleToggleHide = async (service: Service) => {
+    const newHidden = service.hidden ? 0 : 1;
+    const res = await fetch(`/api/services/${service.id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: service.name,
+        url: service.url,
+        icon: service.icon,
+        color: service.color,
+        hidden: newHidden,
+      }),
+    });
+    if (res.ok) {
+      const updated: Service = await res.json();
+      setServices((prev) => prev.map((s) => (s.id === updated.id ? updated : s)));
+    }
+  };
+
   const handleDragEnd = async (event: DragEndEvent) => {
     const { active, over } = event;
     if (!over || active.id === over.id) return;
@@ -167,17 +186,18 @@ export function ServiceGrid({ initialServices, initialBg, initialBgOpacity }: Pr
           onDragEnd={handleDragEnd}
         >
           <SortableContext
-            items={services.map((s) => s.id)}
+            items={services.filter((s) => editMode || !s.hidden).map((s) => s.id)}
             strategy={rectSortingStrategy}
           >
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
-              {services.map((service) => (
+              {services.filter((s) => editMode || !s.hidden).map((service) => (
                 <ServiceCard
                   key={service.id}
                   service={service}
                   editMode={editMode}
                   onEdit={handleEdit}
                   onDelete={setDeletingService}
+                  onToggleHide={handleToggleHide}
                 />
               ))}
             </div>
