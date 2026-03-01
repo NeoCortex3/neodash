@@ -25,6 +25,13 @@ sqlite.exec(`
   );
 `);
 
+// Idempotent column migration (ignored if column already exists)
+try {
+  sqlite.exec(`ALTER TABLE services ADD COLUMN hidden INTEGER NOT NULL DEFAULT 0;`);
+} catch {
+  // Column already exists
+}
+
 const globalForDb = globalThis as unknown as {
   db: ReturnType<typeof drizzle<typeof schema>>;
 };
