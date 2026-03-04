@@ -101,7 +101,20 @@ export function ServiceDialog({ open, service, onSave, onClose }: Props) {
 
           <div>
             <label className="block text-sm text-gray-400 mb-1.5">Icon</label>
-            <IconPicker value={icon} onChange={setIcon} serviceUrl={url} />
+            <IconPicker
+              key={open ? (service?.id ?? "new") : "closed"}
+              value={icon}
+              onChange={setIcon}
+              serviceUrl={url}
+              onColorDetected={handleColorChange}
+              initialMode={(() => {
+                const ic = service?.icon ?? "";
+                if (ic.startsWith("/api/uploads/favicon-") || ic.startsWith("https://www.google.com/s2/favicons")) return "favicon";
+                if (ic.startsWith("http") || ic.startsWith("/api/uploads/icon-")) return "url";
+                if (service) return "icons";
+                return "favicon";
+              })()}
+            />
           </div>
 
           <div>
