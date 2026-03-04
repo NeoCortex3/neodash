@@ -12,6 +12,8 @@ const EXT_TO_MIME: Record<string, string> = {
   webp: "image/webp",
   gif: "image/gif",
   avif: "image/avif",
+  svg: "image/svg+xml",
+  ico: "image/x-icon",
 };
 
 export async function GET(
