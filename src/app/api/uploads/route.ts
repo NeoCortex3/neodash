@@ -11,12 +11,13 @@ export async function GET() {
       return NextResponse.json([]);
     }
     const files = fs.readdirSync(UPLOADS_PATH).filter((f) =>
-      f.startsWith("favicon-") && /\.(png|jpg|jpeg|webp|svg|ico)$/i.test(f)
+      (f.startsWith("favicon-") || f.startsWith("icon-")) &&
+      /\.(png|jpg|jpeg|webp|svg|ico)$/i.test(f)
     );
     const result = files.map((f) => ({
       filename: f,
       url: `/api/uploads/${f}`,
-      label: f.replace(/^favicon-/, "").replace(/\.[^.]+$/, ""),
+      label: f.replace(/^(favicon-|icon-)/, "").replace(/\.[^.]+$/, ""),
     }));
     return NextResponse.json(result);
   } catch {
