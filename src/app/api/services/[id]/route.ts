@@ -18,6 +18,7 @@ export async function PUT(
       icon: body.icon,
       color: body.color,
       ...(body.hidden !== undefined && { hidden: body.hidden }),
+      ...(body.glassEffect !== undefined && { glassEffect: body.glassEffect ? 1 : 0 }),
     })
     .where(eq(services.id, parseInt(id)))
     .returning()

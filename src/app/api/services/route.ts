@@ -40,6 +40,7 @@ export async function POST(request: NextRequest) {
       icon: body.icon || "Globe",
       color: body.color || "#3b82f6",
       sortOrder: nextOrder,
+      glassEffect: body.glassEffect === false ? 0 : 1,
     })
     .returning()
     .get();

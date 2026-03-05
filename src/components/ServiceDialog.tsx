@@ -20,6 +20,7 @@ export function ServiceDialog({ open, service, onSave, onClose }: Props) {
   const [icon, setIcon] = useState("Globe");
   const [color, setColor] = useState("#3b82f6");
   const [hexInput, setHexInput] = useState("#3b82f6");
+  const [glassEffect, setGlassEffect] = useState(true);
 
   useEffect(() => {
     const c = service?.color ?? "#3b82f6";
@@ -28,6 +29,7 @@ export function ServiceDialog({ open, service, onSave, onClose }: Props) {
     setIcon(service?.icon ?? "Globe");
     setColor(c);
     setHexInput(c);
+    setGlassEffect(service ? service.glassEffect === 1 : true);
   }, [service, open]);
 
   useEffect(() => {
@@ -51,7 +53,7 @@ export function ServiceDialog({ open, service, onSave, onClose }: Props) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSave({ name, url, icon, color });
+    onSave({ name, url, icon, color, glassEffect });
   };
 
   return (
@@ -139,6 +141,19 @@ export function ServiceDialog({ open, service, onSave, onClose }: Props) {
               />
             </div>
           </div>
+          <label className="flex items-center gap-3 cursor-pointer select-none pt-1">
+            <div className="relative">
+              <input
+                type="checkbox"
+                checked={glassEffect}
+                onChange={(e) => setGlassEffect(e.target.checked)}
+                className="sr-only peer"
+              />
+              <div className="w-10 h-5 rounded-full bg-gray-700 peer-checked:bg-blue-600 transition-colors" />
+              <div className="absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-white transition-transform peer-checked:translate-x-5" />
+            </div>
+            <span className="text-sm text-gray-400">Glassmorphism</span>
+          </label>
         </div>
 
         <div className="flex gap-3 justify-end pt-2">

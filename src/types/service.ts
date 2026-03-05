@@ -9,4 +9,5 @@ export type ServiceFormData = {
   url: string;
   icon: string;
   color: string;
+  glassEffect: boolean;
 };

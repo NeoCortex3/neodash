@@ -71,7 +71,11 @@ export function ServiceCard({ service, editMode, onEdit, onDelete, onToggleHide 
         href={service.url}
         target="_self"
         rel="noopener noreferrer"
-        className="flex flex-col items-center gap-3 rounded-xl bg-gray-900 border border-gray-800 p-6 transition-all hover:bg-gray-800 hover:border-gray-700 hover:scale-[1.03] hover:shadow-lg hover:shadow-black/20"
+        className={`flex flex-col items-center gap-3 rounded-xl p-6 border transition-all hover:scale-[1.03] hover:shadow-lg ${
+          service.glassEffect
+            ? "bg-white/5 backdrop-blur-md border-white/10 hover:bg-white/10 hover:border-white/20 hover:shadow-black/30"
+            : "bg-gray-900 border-gray-800 hover:bg-gray-800 hover:border-gray-700 hover:shadow-black/20"
+        }`}
         style={{ borderTopColor: service.color, borderTopWidth: "3px" }}
       >
         <ServiceIcon

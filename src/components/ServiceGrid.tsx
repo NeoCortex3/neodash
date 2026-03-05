@@ -117,6 +117,7 @@ export function ServiceGrid({ initialServices, initialBg, initialBgOpacity }: Pr
         icon: service.icon,
         color: service.color,
         hidden: newHidden,
+        glassEffect: service.glassEffect,
       }),
     });
     if (res.ok) {
