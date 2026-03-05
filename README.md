@@ -11,7 +11,7 @@ Docker Compose:<br>
 <pre>
 services:
   neodash:
-    image: neodash:2.2
+    image: neodash:latest
     container_name: neodash
     ports:
       - "9020:3000"
