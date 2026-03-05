@@ -11,7 +11,7 @@ Docker Compose:<br>
 <pre>
 services:
   neodash:
-    image: neodash:latest
+    image: ghcr.io/neocortex3/neodash:latest
     container_name: neodash
     ports:
       - "9020:3000"
