@@ -145,6 +145,14 @@ export function SettingsDialog({ open, currentBg, currentBgOpacity, currentOpenI
           </div>
         </div>
 
+        <button
+          type="button"
+          onClick={handleRemove}
+          className="py-2 text-sm text-red-400 hover:text-red-300 transition-colors self-start"
+        >
+          Hintergrundbild entfernen
+        </button>
+
         <hr className="border-gray-700" />
 
         <label className="flex items-center gap-3 cursor-pointer select-none pt-1">
@@ -161,14 +169,7 @@ export function SettingsDialog({ open, currentBg, currentBgOpacity, currentOpenI
           <span className="text-sm text-gray-400">Links in neuem Tab öffnen</span>
         </label>
 
-        <div className="flex gap-3 justify-between pt-2">
-          <button
-            type="button"
-            onClick={handleRemove}
-            className="px-4 py-2 text-sm text-red-400 hover:text-red-300 transition-colors"
-          >
-            Entfernen
-          </button>
+        <div className="flex gap-3 justify-end pt-2">
           <div className="flex gap-3">
             <button
               type="button"
