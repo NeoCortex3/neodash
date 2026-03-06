@@ -26,9 +26,10 @@ type Props = {
   initialServices: Service[];
   initialBg: string;
   initialBgOpacity: number;
+  initialOpenInNewTab: boolean;
 };
 
-export function ServiceGrid({ initialServices, initialBg, initialBgOpacity }: Props) {
+export function ServiceGrid({ initialServices, initialBg, initialBgOpacity, initialOpenInNewTab }: Props) {
   const [services, setServices] = useState<Service[]>(initialServices);
   const [editMode, setEditMode] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -37,6 +38,7 @@ export function ServiceGrid({ initialServices, initialBg, initialBgOpacity }: Pr
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [bgUrl, setBgUrl] = useState(initialBg);
   const [bgOpacity, setBgOpacity] = useState(initialBgOpacity ?? 1);
+  const [openInNewTab, setOpenInNewTab] = useState(initialOpenInNewTab);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -93,15 +95,16 @@ export function ServiceGrid({ initialServices, initialBg, initialBgOpacity }: Pr
     setDeletingService(null);
   };
 
-  const handleSaveSettings = async (url: string, opacity: number) => {
+  const handleSaveSettings = async (url: string, opacity: number, newOpenInNewTab: boolean) => {
     const res = await fetch("/api/settings", {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ backgroundImage: url, bgOpacity: opacity }),
+      body: JSON.stringify({ backgroundImage: url, bgOpacity: opacity, openInNewTab: newOpenInNewTab ? 1 : 0 }),
     });
     if (res.ok) {
       setBgUrl(url);
       setBgOpacity(opacity);
+      setOpenInNewTab(newOpenInNewTab);
     }
     setSettingsOpen(false);
   };
@@ -196,6 +199,7 @@ export function ServiceGrid({ initialServices, initialBg, initialBgOpacity }: Pr
                   key={service.id}
                   service={service}
                   editMode={editMode}
+                  openInNewTab={openInNewTab}
                   onEdit={handleEdit}
                   onDelete={setDeletingService}
                   onToggleHide={handleToggleHide}
@@ -227,6 +231,7 @@ export function ServiceGrid({ initialServices, initialBg, initialBgOpacity }: Pr
         open={settingsOpen}
         currentBg={bgUrl}
         currentBgOpacity={bgOpacity}
+        currentOpenInNewTab={openInNewTab}
         onSave={handleSaveSettings}
         onClose={() => setSettingsOpen(false)}
       />

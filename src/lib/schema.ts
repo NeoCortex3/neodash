@@ -4,6 +4,7 @@ export const settings = sqliteTable("settings", {
   id: integer("id").primaryKey(),
   backgroundImage: text("background_image").notNull().default(""),
   bgOpacity: real("bg_opacity").notNull().default(1),
+  openInNewTab: integer("open_in_new_tab").notNull().default(0),
 });
 
 export const services = sqliteTable("services", {

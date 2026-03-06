@@ -14,8 +14,8 @@ export default function DashboardPage() {
 
   let settingsRow = db.select().from(settings).where(eq(settings.id, 1)).get();
   if (!settingsRow) {
-    db.insert(settings).values({ id: 1, backgroundImage: "", bgOpacity: 1 }).run();
-    settingsRow = { id: 1, backgroundImage: "", bgOpacity: 1 };
+    db.insert(settings).values({ id: 1, backgroundImage: "", bgOpacity: 1, openInNewTab: 0 }).run();
+    settingsRow = { id: 1, backgroundImage: "", bgOpacity: 1, openInNewTab: 0 };
   }
 
   return (
@@ -25,6 +25,7 @@ export default function DashboardPage() {
           initialServices={allServices}
           initialBg={settingsRow.backgroundImage}
           initialBgOpacity={settingsRow.bgOpacity ?? 1}
+          initialOpenInNewTab={Boolean(settingsRow.openInNewTab)}
         />
       </div>
     </main>

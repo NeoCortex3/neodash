@@ -9,6 +9,7 @@ import { CSS } from "@dnd-kit/utilities";
 type Props = {
   service: Service;
   editMode: boolean;
+  openInNewTab: boolean;
   onEdit: (service: Service) => void;
   onDelete: (service: Service) => void;
   onToggleHide: (service: Service) => void;
@@ -48,7 +49,7 @@ function ServiceIcon({
   return <Globe size={40} style={{ color }} />;
 }
 
-export function ServiceCard({ service, editMode, onEdit, onDelete, onToggleHide }: Props) {
+export function ServiceCard({ service, editMode, openInNewTab, onEdit, onDelete, onToggleHide }: Props) {
   const {
     attributes,
     listeners,
@@ -69,7 +70,7 @@ export function ServiceCard({ service, editMode, onEdit, onDelete, onToggleHide 
     <div ref={setNodeRef} style={style} className="group relative">
       <a
         href={service.url}
-        target="_self"
+        target={openInNewTab ? "_blank" : "_self"}
         rel="noopener noreferrer"
         className={`flex flex-col items-center gap-3 rounded-xl p-6 border transition-all hover:scale-[1.03] hover:shadow-lg ${
           service.glassEffect

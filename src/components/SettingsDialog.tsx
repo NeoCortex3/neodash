@@ -7,21 +7,24 @@ type Props = {
   open: boolean;
   currentBg: string;
   currentBgOpacity: number;
-  onSave: (url: string, opacity: number) => void;
+  currentOpenInNewTab: boolean;
+  onSave: (url: string, opacity: number, openInNewTab: boolean) => void;
   onClose: () => void;
 };
 
-export function SettingsDialog({ open, currentBg, currentBgOpacity, onSave, onClose }: Props) {
+export function SettingsDialog({ open, currentBg, currentBgOpacity, currentOpenInNewTab, onSave, onClose }: Props) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [url, setUrl] = useState(currentBg);
   const [opacity, setOpacity] = useState(Math.round((currentBgOpacity ?? 1) * 100));
+  const [openInNewTab, setOpenInNewTab] = useState(currentOpenInNewTab);
   const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
     setUrl(currentBg);
     setOpacity(Math.round((currentBgOpacity ?? 1) * 100));
-  }, [currentBg, currentBgOpacity, open]);
+    setOpenInNewTab(currentOpenInNewTab);
+  }, [currentBg, currentBgOpacity, currentOpenInNewTab, open]);
 
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -32,11 +35,11 @@ export function SettingsDialog({ open, currentBg, currentBgOpacity, onSave, onCl
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSave(url, opacity / 100);
+    onSave(url, opacity / 100, openInNewTab);
   };
 
   const handleRemove = () => {
-    onSave("", 1);
+    onSave("", 1, openInNewTab);
   };
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -141,6 +144,22 @@ export function SettingsDialog({ open, currentBg, currentBgOpacity, onSave, onCl
             />
           </div>
         </div>
+
+        <hr className="border-gray-700" />
+
+        <label className="flex items-center gap-3 cursor-pointer select-none pt-1">
+          <div className="relative">
+            <input
+              type="checkbox"
+              checked={openInNewTab}
+              onChange={(e) => setOpenInNewTab(e.target.checked)}
+              className="sr-only peer"
+            />
+            <div className="w-10 h-5 rounded-full bg-gray-700 peer-checked:bg-blue-600 transition-colors" />
+            <div className="absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-white transition-transform peer-checked:translate-x-5" />
+          </div>
+          <span className="text-sm text-gray-400">Links in neuem Tab öffnen</span>
+        </label>
 
         <div className="flex gap-3 justify-between pt-2">
           <button

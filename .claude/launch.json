@@ -3,15 +3,16 @@
   "configurations": [
     {
       "name": "Next.js Dev",
-      "runtimeExecutable": "C:/Program Files/nodejs/node.exe",
+      "runtimeExecutable": "D:/tools/nodejs/node.exe",
       "runtimeArgs": ["node_modules/next/dist/bin/next", "dev"],
       "port": 3000
     },
     {
       "name": "Drizzle Studio",
-      "runtimeExecutable": "C:/Program Files/nodejs/node.exe",
+      "runtimeExecutable": "D:/tools/nodejs/node.exe",
       "runtimeArgs": ["node_modules/drizzle-kit/bin.cjs", "studio"],
       "port": 4983
     }
-  ]
+  ],
+  "autoVerify": false
 }

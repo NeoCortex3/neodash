@@ -36,6 +36,11 @@ try {
 } catch {
   // Column already exists
 }
+try {
+  sqlite.exec(`ALTER TABLE settings ADD COLUMN open_in_new_tab INTEGER NOT NULL DEFAULT 0;`);
+} catch {
+  // Column already exists
+}
 
 const globalForDb = globalThis as unknown as {
   db: ReturnType<typeof drizzle<typeof schema>>;

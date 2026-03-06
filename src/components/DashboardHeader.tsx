@@ -1,6 +1,6 @@
 "use client";
 
-import { Plus, Image, Pencil } from "lucide-react";
+import { Plus, Settings, Pencil } from "lucide-react";
 
 type Props = {
   editMode: boolean;
@@ -35,7 +35,7 @@ export function DashboardHeader({
           className="p-2.5 rounded-xl bg-gray-800 text-gray-400 hover:text-white hover:bg-gray-700 transition-colors"
           title="Einstellungen"
         >
-          <Image size={18} />
+          <Settings size={18} />
         </button>
         <button
           onClick={onAddService}
