@@ -1,7 +1,7 @@
 <b>NeoDash</b><br>
 Homeserver Dashboard that just works.<br>
-With automatic Favicon download and categories.<br>
-Reorder your by drag&drop.<br>
+With automatic favicon download and categories.<br>
+Reorder your links simply by drag&drop.<br>
 <br>
 <img width="1157" height="519" alt="grafik" src="https://github.com/user-attachments/assets/8508d627-bc42-4637-a256-e0ee3f9eb6ef" /><br>
 <br>
