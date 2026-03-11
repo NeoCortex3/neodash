@@ -1,15 +1,14 @@
 services:
   neodash:
-    build: .
+    image: ghcr.io/neocortex3/neodash:latest
     container_name: neodash
     ports:
-      - "3000:3000"
+      - "9020:3000"
     volumes:
-      - neodash-data:/app/data
-    environment:
-      - DATABASE_PATH=/app/data/data.db
-      - UPLOADS_PATH=/app/data/uploads
+      - data:/app/data #einstellungen
+      - uploads:/app/public/uploads #uploads hintergrund, icons
     restart: unless-stopped
 
 volumes:
-  neodash-data:
+  data:
+  uploads:
